@@ -1,35 +1,37 @@
 const VoiceResponse = require("twilio").twiml.VoiceResponse;
 const {question_english,answers_chinese,answers_english,answers_spanish,question_spanish} =require('./questionandanswers')
 
-exports.welcome = function welcome() {
-  const voiceResponse = new VoiceResponse();
+  exports.welcome = function welcome() {
+    const voiceResponse = new VoiceResponse();
 
-  const gather = voiceResponse.gather({
-    action: "/ivr/faq",
-    numDigits: "1",
-    method: "POST",
-  });
+    const gather = voiceResponse.gather({
+      action: "/ivr/menu",
+      numDigits: "1",
+      method: "POST",
+    });
 
-  gather.say(
-    "Thanks for calling the Lazy Guesthouse Service" +
-      "Please press 1 continue in English. " +
-      "Press 2 to continue in Mandarin. " +
-      "Press 3 to continue in Spansih " +
-      "Press 9 to repeat ",
-    { loop: 3 }
-  );
+    gather.say(
+      "Thanks for calling the Lazy Guesthouse Service" +
+        "Please press 1 continue in English. " +
+        "Press 2 to continue in Mandarin. " +
+        "Presione 3 para continuar en español. " +
+        "Press 9 to repeat ",
+      { loop: 3 }
+    );
 
-  return voiceResponse.toString();
+    return voiceResponse.toString();
+  };
+
+exports.menu = function menu(digit) {
+  const optionActions = {
+    1: faq,
+    2: faq,
+    3: faq,
+    
+  };
+
+  return optionActions[digit] ? optionActions[digit]() : redirectWelcome();
 };
-
-// exports.menu = function menu(digit) {
-//   const optionActions = {
-//     1: giveExtractionPointInstructions,
-//     2: listPlanets,
-//   };
-
-//   return optionActions[digit] ? optionActions[digit]() : redirectWelcome();
-// };
 
 // exports.planets = function planets(digit) {
 //   const optionActions = {
@@ -94,8 +96,9 @@ function faq(req, res) {
 
   return twiml.toString();
 }
-function faqquestions(digit,speechResult) {
+function faqquestions(req,res,digit) {
   const response = new VoiceResponse();
+  const speechResult = req.body.SpeechResult;
   if (digit === "1") {
     for (let index = 0; index < question_english.length; index++) {
       if (speechResult.includes(question_english[index])) {

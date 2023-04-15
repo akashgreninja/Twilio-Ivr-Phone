@@ -26,8 +26,8 @@ router.post("/faq", (req, res) => {
 });
 // POST: /ivr/faqquestions
 router.post("/faqquestions", (req, res) => {
-  const speechResult = req.body.SpeechResult;
-  res.send(faqquestions(speechResult, digit));
+
+  res.send(faqquestions(req,res, digit));
 });
 
 module.exports = router;
