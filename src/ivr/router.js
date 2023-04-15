@@ -1,5 +1,5 @@
 const Router = require("express").Router;
-const { welcome, menu, planets } = require("./handler");
+const { welcome, menu,faq,faqquestions } = require("./handler");
 
 const router = new Router();
 
@@ -11,6 +11,8 @@ router.post("/welcome", (req, res) => {
 // POST: /ivr/menu
 router.post("/menu", (req, res) => {
   const digit = req.body.Digits;
+  console.log(digit)
+  console.log("here")
   return res.send(menu(digit));
 });
 
@@ -20,10 +22,10 @@ router.post("/menu", (req, res) => {
 //   res.send(planets(digit));
 // });
 // POST: /ivr/faq
-router.post("/faq", (req, res) => {
-  const digit = req.body.Digits;
-  res.send(faq(digit));
-});
+// router.post("/faq", (req, res) => {
+//   const digit = req.body.Digits;
+//   res.send(faq(digit));
+// });
 // POST: /ivr/faqquestions
 router.post("/faqquestions", (req, res) => {
 

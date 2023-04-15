@@ -5,7 +5,7 @@ const {question_english,answers_chinese,answers_english,answers_spanish,question
     const voiceResponse = new VoiceResponse();
 
     const gather = voiceResponse.gather({
-      action: "/ivr/menu",
+      action: "/ivr/faq",
       numDigits: "1",
       method: "POST",
     });
@@ -13,7 +13,7 @@ const {question_english,answers_chinese,answers_english,answers_spanish,question
     gather.say(
       "Thanks for calling the Lazy Guesthouse Service" +
         "Please press 1 continue in English. " +
-        "按 2 转换为普通话. " +
+        "Press 2 to continue in Mandarin. " +
         "Presione 3 para continuar en español. " +
         "Press 9 to repeat ",
       { loop: 3 }
@@ -24,35 +24,75 @@ const {question_english,answers_chinese,answers_english,answers_spanish,question
 
 exports.menu = function menu(digit) {
   const optionActions = {
-    1: faq,
-    2: faq,
-    3: faq,
+    1: faq(digit),
+    2: faq(digit),
+    3: faq(digit),
     
   };
 
   return optionActions[digit] ? optionActions[digit]() : redirectWelcome();
 };
 
+// exports.planets = function planets(digit) {
+//   const optionActions = {
+//     2: "+19295566487",
+//     3: "+17262043675",
+//     4: "+16513582243",
+//   };
+
+//   if (optionActions[digit]) {
+//     const twiml = new VoiceResponse();
+//     twiml.dial(optionActions[digit]);
+//     return twiml.toString();
+//   }
+
+//   return redirectWelcome();
+// };
+
+// /**
+//  * Returns Twiml
+//  * @return {String}
+//  */
+// function giveExtractionPointInstructions() {
+//   const twiml = new VoiceResponse();
+
+//   twiml.say(
+//     "To get to your extraction point, get on your bike and go down " +
+//       "the street. Then Left down an alley. Avoid the police cars. Turn left " +
+//       "into an unfinished housing development. Fly over the roadblock. Go " +
+//       "passed the moon. Soon after you will see your mother ship.",
+//     { voice: "alice", language: "en-GB" }
+//   );
+
+//   twiml.say(
+//     "Thank you for calling the ET Phone Home Service - the " +
+//       "adventurous alien's first choice in intergalactic travel"
+//   );
+
+//   twiml.hangup();
+
+//   return twiml.toString();
+// }
 
 
 /**
  * Returns a TwiML to interact with the client
  * @return {String}
  */
-function faq(req, res) {
+function faq(digit) {
   const twiml = new VoiceResponse();
   const speechResult = req.body.SpeechResult;
 
   const gather = twiml.gather({
     action: "/ivr/faqquestions",
     input: "speech",
-    // numDigits: '1',
+    numDigits: '1',
     timeout: 3,
     method: "POST",
   });
   gather.say("Welcome to the IVR system. Please state your request.");
   res.writeHead(200, { "Content-Type": "text/xml" });
-  res.end(response.toString());
+  res.end(response.toString(),digit);
 
   return twiml.toString();
 }
