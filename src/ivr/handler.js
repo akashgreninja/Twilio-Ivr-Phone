@@ -13,7 +13,7 @@ const {question_english,answers_chinese,answers_english,answers_spanish,question
     gather.say(
       "Thanks for calling the Lazy Guesthouse Service" +
         "Please press 1 continue in English. " +
-        "Press 2 to continue in Mandarin. " +
+        "按 2 转换为普通话. " +
         "Presione 3 para continuar en español. " +
         "Press 9 to repeat ",
       { loop: 3 }
@@ -33,46 +33,6 @@ exports.menu = function menu(digit) {
   return optionActions[digit] ? optionActions[digit]() : redirectWelcome();
 };
 
-// exports.planets = function planets(digit) {
-//   const optionActions = {
-//     2: "+19295566487",
-//     3: "+17262043675",
-//     4: "+16513582243",
-//   };
-
-//   if (optionActions[digit]) {
-//     const twiml = new VoiceResponse();
-//     twiml.dial(optionActions[digit]);
-//     return twiml.toString();
-//   }
-
-//   return redirectWelcome();
-// };
-
-// /**
-//  * Returns Twiml
-//  * @return {String}
-//  */
-// function giveExtractionPointInstructions() {
-//   const twiml = new VoiceResponse();
-
-//   twiml.say(
-//     "To get to your extraction point, get on your bike and go down " +
-//       "the street. Then Left down an alley. Avoid the police cars. Turn left " +
-//       "into an unfinished housing development. Fly over the roadblock. Go " +
-//       "passed the moon. Soon after you will see your mother ship.",
-//     { voice: "alice", language: "en-GB" }
-//   );
-
-//   twiml.say(
-//     "Thank you for calling the ET Phone Home Service - the " +
-//       "adventurous alien's first choice in intergalactic travel"
-//   );
-
-//   twiml.hangup();
-
-//   return twiml.toString();
-// }
 
 
 /**
@@ -114,8 +74,7 @@ function faqquestions(req,res,digit) {
       }
     }
 
-    // res.writeHead(200, { "Content-Type": "text/xml" });
-    // res.end(response.toString());
+
   }
   else if (digit === "2") {
     for (let index = 0; index < question_chinese.length; index++) {

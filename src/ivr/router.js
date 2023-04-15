@@ -14,11 +14,11 @@ router.post("/menu", (req, res) => {
   return res.send(menu(digit));
 });
 
-// POST: /ivr/planets
-router.post("/planets", (req, res) => {
-  const digit = req.body.Digits;
-  res.send(planets(digit));
-});
+// // POST: /ivr/planets
+// router.post("/planets", (req, res) => {
+//   const digit = req.body.Digits;
+//   res.send(planets(digit));
+// });
 // POST: /ivr/faq
 router.post("/faq", (req, res) => {
   const digit = req.body.Digits;
